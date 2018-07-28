@@ -3,12 +3,9 @@ package framework.web_pages;
 import framework.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import stepdefinition.SharedSD;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ThreelyHomePage extends BasePage {
 
@@ -22,6 +19,7 @@ public class ThreelyHomePage extends BasePage {
     private By signinbutton = By.xpath("//a[@href='/login']");
     private By imagecircle = By.xpath("//img[@class='img-circle']");
     private By logoutbutton = By.xpath("//a[@href='/logout']");
+    private By usernamedisplay = By.xpath("//a[@href='/profile']");
 
     public void clickJoinButton() {
         clickOn(joinbutton);
@@ -32,14 +30,12 @@ public class ThreelyHomePage extends BasePage {
     } //click signin button to go to signin page
 
 
-    public void userNameIsDisplayed() {
-        SharedSD.getDriver().findElement(imagecircle).isDisplayed();
-    }
+    public boolean userNameIsDisplayed() {
+     clickOnImageCircleButton();
+     return isElementDisplayed(usernamedisplay); }
 
-    public boolean isLogoutButtonDisplayed() {
 
-        return isElementDisplayed(logoutbutton);
-    }
+    public boolean isLogoutButtonDisplayed() { return isElementDisplayed(logoutbutton); }
 
     public void clickOnImageCircleButton() {
         clickOn(imagecircle);
@@ -48,72 +44,28 @@ public class ThreelyHomePage extends BasePage {
     //auto complete method
     public void autoComplete(String auto) {
         clickOn(threelysearchbartextfield);
-        sendText(threelysearchbartextfield, auto);
-    }
+        sendText(threelysearchbartextfield, auto); }
 
-    //verifying expected title is displayed
-    public void verifyAutoCompleteTitle(String title) {
-
-        List<WebElement> dropdown = SharedSD.getDriver().findElements(autocompletedropdown);
-        try {
-            for (WebElement ele : dropdown) {
-                if (ele.getText().equalsIgnoreCase("Title: I will teach you IOS")) {
-                    ele.isDisplayed();
-                }
-            }
-        } catch (NoSuchElementException e) {
-            Assert.fail("Element is not found :");
-            e.printStackTrace();
-        }
-    }
+    public boolean autoCompleteTitleDropdown(String title){
+        autoCompleteTitle(autocompletedropdown,title);
+         return true; }
 
     //method for counting number of posts displayed on the home page
-    public int numberOfPostsOnHomePage() {
-        List<WebElement> posts = SharedSD.getDriver().findElements(postsonpage);
-        int postcount = posts.size();
-
-        return postcount;
-    }
+    public int postsOnHomePage() { return numberOfPosts(postsonpage); }
 
     //for getting if all posts have images display
     public int postsWithImages() {
-        List<WebElement> images = SharedSD.getDriver().findElements(imagesonposts);
+        List imagelist = findElementsAsLists(imagesonposts);
+        ArrayList<WebElement> images = new ArrayList(imagelist);
         int imagecount = images.size();
-
-        for (WebElement img : images) {
-            img.isDisplayed();
-        }
-        return imagecount;
-    }
+        for (int i = 0; i<=imagecount; i++){ }
+            return imagecount; }
 
     //method for getting price tags from posts
-    public int postContainsPriceTags() {
-        List<WebElement> pricetag = SharedSD.getDriver().findElements(pricetagsonposts);
-        ArrayList<String> withpricetag = new ArrayList<>();
-        String price = null;
+    public int postContainsPriceTags() { return countNumberOfItemsOnPosts(pricetagsonposts); }
 
-        int tags = pricetag.size();
 
-        for (int i = 0; i < tags; i++) {
-            price = pricetag.get(i).getText();
-            if (price.length() >= 2) {
-                withpricetag.add(price);
-            }
-        }
-        return withpricetag.size();
-    }
+    //method for getting posts with a title
+    public int postsTitle(){ return countNumberOfItemsOnPosts(titleonposts); }
 
-    //method for verifying if all posts have titles
-    public int allPostsHaveTitle() {
-        List<WebElement> title = SharedSD.getDriver().findElements(titleonposts);
-        ArrayList<String> postsWithTitle = new ArrayList<>();
-        int titlecount = title.size();
-        for (WebElement titles : title) {
-            String ti = titles.getText();
-            if (ti.length() >= 1) {
-                postsWithTitle.add(ti);
-            }
-        }
-        return postsWithTitle.size();
-    }
 }

@@ -23,13 +23,7 @@ public class ThreelyRegistrationPage extends BasePage {
     public void enterEmailAtSignUp(String email){sendText(signupemailtextfield, email);} //for entering email in email text field
     public void enterPasswordAtSignUp(String password){sendText(signuppasswordtextfield, password);}//for entering valid password at signup
     public void clickSubmitButtonToSignUp(){clickOn(signupsubmitbutton);} //@signup page click submit button to register as new user
-
-//    to generate random email for a valid registration
-    public void emailGenerator(String email){
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(1000);
-        sendText(signupemailtextfield,"username"+ randomInt +"@gmail.com");
-    }
+    public void randomEmailGenarator(String email){ emailGenerator(signupemailtextfield,email); }//calling method from base page for random email generation
 
      //to verify if signed up as new user click image on homepage to verify your name is displayed
     public boolean invalidLogin(){ return SharedSD.getDriver().findElement(signuppagetitle).isDisplayed();

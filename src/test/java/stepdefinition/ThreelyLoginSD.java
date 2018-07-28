@@ -18,7 +18,7 @@ public class ThreelyLoginSD {
         Assert.assertEquals(loginPage.getLogInTitle(), "Login", "invalid page");
     }
 
-    @When("^I enter  email as (.+) password as \"([^\"]*)\"$")
+    @When("^I enter  email as (.+) password as (.+)$")
     public void i_enter_email_as_password_as(String email, String password) {
         loginPage.enterEmailSignIn(email);
         loginPage.enterPasswordSignIn(password);

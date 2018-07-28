@@ -1,12 +1,12 @@
 //package framework.web_pages;
 
-import framework.BasePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import stepdefinition.SharedSD;
-
-import java.util.List;
+//import framework.BasePage;
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.WebElement;
+//import org.testng.Assert;
+//import stepdefinition.SharedSD;
+//
+//import java.util.List;
 
 //public class HotelsHomePage extends BasePage {
 //

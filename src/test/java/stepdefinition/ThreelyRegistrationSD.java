@@ -22,7 +22,7 @@ public class ThreelyRegistrationSD {
     @When("^I enter  the name as (.+) the email as (.+) the password as (.+)$")
     public void iEnterNameAsEmailAsPasswordAs(String name, String email, String password) {
         registrationPage.enterNameAtSignUp(name);
-        registrationPage.emailGenerator(email);
+        registrationPage.randomEmailGenarator(email);
         registrationPage.enterPasswordAtSignUp(password);
     }
 

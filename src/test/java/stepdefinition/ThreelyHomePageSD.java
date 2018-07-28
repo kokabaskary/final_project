@@ -17,33 +17,36 @@ public class ThreelyHomePageSD {
         }
 
     @When("^I search on top search bar with text \"([^\"]*)\"$")
-    public void iSearchOnTopSearchBarWithText(String auto) throws InterruptedException {
+    public void iSearchOnTopSearchBarWithText(String auto)  {
         homePage.autoComplete(auto);
-        Thread.sleep(5000); }
+    }
 
     @Then("^I verify \"([^\"]*)\" as displayed result$")
     public void iVerifyAsDisplayedResult(String title) {
-
-        homePage.verifyAutoCompleteTitle(title);
+        try {
+            Assert.assertTrue(homePage.autoCompleteTitleDropdown(title),"Title: I will teach you IOS");
+        }catch (AssertionError error){
+            System.out.println("Title did not match");
+        }
     }
 
 
     @Then("^I verify (\\d+) total post is displayed$")
     public void iVerifyTotalPostIsDisplayed(int postCount)  {
         try {
-            Assert.assertEquals(homePage.numberOfPostsOnHomePage(), postCount);
+            Assert.assertEquals(homePage.postsOnHomePage(), postCount);
         }catch (AssertionError assertionError){
-            System.out.println("Total posts found are :"+postCount +"Expected posts were : " +homePage.numberOfPostsOnHomePage());
+            System.out.println("Total posts found are :"+postCount +"Expected posts were : " +homePage.postsOnHomePage());
             }
     }
 
     @Then("^I verify all post has price tag$")
     public void iVerifyAllPostHasPriceTag()  {
         try {
-            Assert.assertEquals(homePage.postContainsPriceTags(),homePage.numberOfPostsOnHomePage());
+            Assert.assertEquals(homePage.postContainsPriceTags(), homePage.postsOnHomePage());
             System.out.println("All posts have price tags");
         }catch (AssertionError assertionError){
-            int postswithoutpricetag = homePage.numberOfPostsOnHomePage() - homePage.postContainsPriceTags();
+            int postswithoutpricetag = homePage.postsOnHomePage() - homePage.postContainsPriceTags();
             System.out.println("Number of posts without price tags are = "+ postswithoutpricetag);
         }
 
@@ -52,10 +55,10 @@ public class ThreelyHomePageSD {
     @Then("^I verify all post has title$")
     public void iVerifyAllPostHasTitle(){
       try {
-          Assert.assertEquals(homePage.allPostsHaveTitle(),homePage.numberOfPostsOnHomePage());
+          Assert.assertEquals(homePage.postsTitle(),homePage.postsOnHomePage());
           System.out.println("All posts have titles");
       }catch (AssertionError assertionError){
-          int postswithouttitles = homePage.numberOfPostsOnHomePage() - homePage.allPostsHaveTitle();
+          int postswithouttitles = homePage.postsOnHomePage() - homePage.postsTitle();
           System.out.println("Number of posts without title are = "+postswithouttitles);
       }
 
@@ -63,11 +66,10 @@ public class ThreelyHomePageSD {
 
     @Then("^I verify all post has displayed image$")
     public void iVerifyAllPostHasDisplayedImage(){
-//        homePage.imageDisplayVerification();
         try {
-            Assert.assertEquals(homePage.numberOfPostsOnHomePage(), homePage.postsWithImages());
+            Assert.assertEquals(homePage.postsOnHomePage(), homePage.postsWithImages());
         }catch (AssertionError assertionError){
-            int difference = homePage.numberOfPostsOnHomePage() -homePage.postsWithImages();
+            int difference = homePage.postsOnHomePage() - homePage.postsWithImages();
             System.out.println("Number of posts without images are = "+difference);
         }
 
